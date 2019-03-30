@@ -7,11 +7,10 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import finemirel.server.Server;
-import finemirel.server.connection.NeedConnectedUser;
 
 public class BuildingConnection {
 
-	private Logger log = LogManager.getLogger(Server.class);
+	private Logger log = LogManager.getLogger(BuildingConnection.class);
 
 	private static final String REG_AGENT_CMD = "/register agent ";
 	private static final String REG_CLIENT_CMD = "/register client ";

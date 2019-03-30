@@ -9,8 +9,7 @@ import java.net.Socket;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import finemirel.server.connection.ConnectionAgent;
-import finemirel.server.connection.NeedConnectedUser;
+import finemirel.server.connection.agent.ConnectionAgent;
 
 public class AgentRegistration implements UserRegistration {
 	private Logger log = LogManager.getLogger(AgentRegistration.class);

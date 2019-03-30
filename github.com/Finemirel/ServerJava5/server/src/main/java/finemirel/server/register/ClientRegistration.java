@@ -9,8 +9,7 @@ import java.net.Socket;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import finemirel.server.connection.ConnectionClient;
-import finemirel.server.connection.NeedConnectedUser;
+import finemirel.server.connection.client.ConnectionClient;
 
 public class ClientRegistration implements UserRegistration {
 	private Logger log = LogManager.getLogger(ClientRegistration.class);
@@ -29,7 +28,7 @@ public class ClientRegistration implements UserRegistration {
 			String name = getNameString(helloMsg);
 			ConnectionClient con = new ConnectionClient(socket, name);
 			out.println("Hello " + name + "! You client");
-			new Thread(con).start();
+			con.startChat();//TODO
 		} catch (IOException e) {
 			need.setNeedConnectedUser(true);
 			e.printStackTrace();

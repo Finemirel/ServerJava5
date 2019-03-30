@@ -8,8 +8,6 @@ import java.net.Socket;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import finemirel.server.connection.NeedConnectedUser;
-
 public class ConnectedUser implements Runnable {
 	private Logger log = LogManager.getLogger(ConnectedUser.class);
 

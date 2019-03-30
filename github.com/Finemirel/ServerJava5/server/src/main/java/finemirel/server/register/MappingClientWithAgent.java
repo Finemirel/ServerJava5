@@ -1,7 +1,7 @@
 package finemirel.server.register;
 
-import finemirel.server.connection.ConnectionAgent;
-import finemirel.server.connection.ConnectionClient;
+import finemirel.server.connection.agent.ConnectionAgent;
+import finemirel.server.connection.client.ConnectionClient;
 
 public class MappingClientWithAgent {
 	private ConnectionClient client;

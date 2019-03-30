@@ -3,7 +3,7 @@ package finemirel.server.register;
 import java.util.LinkedList;
 import java.util.List;
 
-import finemirel.server.connection.ConnectionAgent;
+import finemirel.server.connection.agent.ConnectionAgent;
 
 public class RegisterUsers {
 	

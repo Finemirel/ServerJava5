@@ -9,8 +9,6 @@ import java.net.Socket;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import finemirel.server.connection.NeedConnectedUser;
-
 public class NoCorrectedRegistrtion implements UserRegistration {
 	private Logger log = LogManager.getLogger(NoCorrectedRegistrtion.class);
 	
