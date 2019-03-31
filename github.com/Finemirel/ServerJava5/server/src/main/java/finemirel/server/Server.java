@@ -30,7 +30,7 @@ public class Server {
 		while (true) {
 			try {
 				Socket socket = serverSocket.accept();
-				log.info("new client connection");
+				log.info("new user connection");
 				new Thread(new ConnectedUser(socket)).start();
 			} catch (IOException e) {
 				// TODO Auto-generated catch block

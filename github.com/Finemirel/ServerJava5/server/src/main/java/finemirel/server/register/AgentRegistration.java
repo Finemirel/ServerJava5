@@ -27,15 +27,19 @@ public class AgentRegistration implements UserRegistration {
 			log.info("Register agent");
 			// expected input format: REG_AGENT_CMD + name
 			String name = getNameString(helloMsg);
-			ConnectionAgent con = new ConnectionAgent(socket, name, true);
-			RegisterUsers.addConnectionAgent(con);
+			ConnectionAgent con = new ConnectionAgent(socket, name);
+			synchRegisterAgent(con);
 			out.println("You name: " + name + "! You agent");
-			new Thread(con).start();
+			con.startChat();//TODO
 		} catch (IOException e) {
 			need.setNeedConnectedUser(true);
 			e.printStackTrace();
 		}
 
+	}
+
+	synchronized private void synchRegisterAgent(ConnectionAgent con) {
+		RegisterUsers.addConnectionAgent(con);
 	}
 	
 	private String getNameString(String str) {

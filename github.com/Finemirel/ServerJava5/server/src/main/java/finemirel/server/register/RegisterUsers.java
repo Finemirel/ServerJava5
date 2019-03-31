@@ -1,5 +1,6 @@
 package finemirel.server.register;
 
+import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -7,8 +8,8 @@ import finemirel.server.connection.agent.ConnectionAgent;
 
 public class RegisterUsers {
 	
-	private static List<ConnectionAgent> connectionsAgent = new LinkedList<>();
-	private static List<MappingClientWithAgent> mappingUser = new LinkedList<>();
+	private volatile static List<ConnectionAgent> connectionsAgent = Collections.synchronizedList(new LinkedList<>());
+	private volatile static List<MappingClientWithAgent> mappingUser = Collections.synchronizedList(new LinkedList<>());
 	
 	public static List<ConnectionAgent> getConnectionsAgent() {
 		return connectionsAgent;

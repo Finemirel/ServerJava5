@@ -22,6 +22,7 @@ public class ConnectedUser implements Runnable {
 
 	@Override
 	public void run() {
+		log.info("in connected user");
 		while (need.isNeedConnectedUser()) {
 			try {
 				BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));

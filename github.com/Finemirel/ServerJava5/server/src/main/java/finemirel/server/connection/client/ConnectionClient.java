@@ -4,8 +4,6 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.Socket;
-import java.util.LinkedList;
-import java.util.List;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -17,7 +15,7 @@ import finemirel.server.register.RegisterUsers;
 public class ConnectionClient {
 
 	private Logger log = LogManager.getLogger(ConnectionClient.class);
-	
+
 	private Socket socket;
 	private boolean needConnection;
 	private String name;
@@ -29,16 +27,15 @@ public class ConnectionClient {
 	}
 
 	public void startChat() {
-		log.info("In run Connection. Name " + this.name);
+		log.info("In connection client");
 		needConnection = true;
 		while (needConnection) {
-			if (agent == null) {
-				agent = searchAgent(agent);
-			}
 			try {
 				BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-
-				while (in.ready() && agent != null) {
+				while (in.ready()) {
+					if (agent == null) {
+						agent = searchAgent(agent);
+					}
 					String msg = in.readLine();
 					CMessageDispetcher disp = new CMessageDispetcher(this, agent, msg);
 					disp.executeMessage(msg, needConnection);
@@ -52,28 +49,25 @@ public class ConnectionClient {
 
 	private ConnectionAgent searchAgent(ConnectionAgent agent) {
 		while (true) {
-			try {
-				Thread.sleep(300);
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+			agent = searchAgentSynch();
+			if (agent != null) {
+				return agent;
 			}
-			List<ConnectionAgent> listConnections = new LinkedList<>();
-			//Synchronize
-			listConnections = RegisterUsers.getConnectionsAgent();
-			if (!listConnections.isEmpty()) {
-				for (ConnectionAgent con : listConnections) {
-					if (con.isFree()) {
-						//Synchronize
-						RegisterUsers.addMappingUser(new MappingClientWithAgent(this, con));
-						con.setFree(false);
-						agent = con;
-						log.info("Agent search");
-						return agent;
-					}
+		}
+	}
+
+	private ConnectionAgent searchAgentSynch() {
+		if (!RegisterUsers.getConnectionsAgent().isEmpty()) {
+			for (ConnectionAgent con : RegisterUsers.getConnectionsAgent()) {
+				if (con.isFree()) {
+					RegisterUsers.addMappingUser(new MappingClientWithAgent(this, con));
+					con.setFree(false);
+					log.info("Agent search");
+					return con;
 				}
 			}
 		}
+		return null;
 	}
 
 	public String getName() {
@@ -90,6 +84,10 @@ public class ConnectionClient {
 
 	public void setAgent(ConnectionAgent agent) {
 		this.agent = agent;
+	}
+
+	public void setNeedConnection(boolean needConnection) {
+		this.needConnection = needConnection;
 	}
 
 }
